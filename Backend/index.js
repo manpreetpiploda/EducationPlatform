@@ -16,11 +16,6 @@ connectDB()
     console.log("MONGO db connection failed !!! ", err);
 })
 
-// app.use('/', (req,res)=>  {
-//     // console.log(`Running at port ${potr}`);
-//     res.send("Server is ready");
-// })
-
-// app.listen(port, ()=>{
-//     console.log(`Running at port ${port}`);
-// })
+app.use('/', (req,res)=>  {
+    res.send("Server is ready");
+})
