@@ -37,10 +37,15 @@ app.use(cookieParser())
 cloudinaryConnect();
 
 //route imports
-import userRouter from './src/routes/user.route.js';
+import userRoutes from './src/routes/user.route.js';
+import profileRoutes from './src/routes/profile.routes.js';
+import courseRoutes from './src/routes/course.routes.js';
+import contactUsRoute from './src/routes/contactUs.routes.js'
 
-
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/course", courseRoutes);
+app.use("/api/v1/reach", contactUsRoute);
 
 
 export {app};
