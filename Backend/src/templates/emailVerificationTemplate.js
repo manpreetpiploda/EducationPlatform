@@ -86,3 +86,4 @@ const otpTemplate = (otp) => {
 };
 
 export {otpTemplate};
+// export {otpTemplate};

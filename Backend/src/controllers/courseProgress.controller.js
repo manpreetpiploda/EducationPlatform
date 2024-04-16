@@ -1,7 +1,7 @@
-import { Course } from "../models/course.model";
-import { Section } from "../models/section.model";
-import { SubSection } from "../models/subSection.model";
-import { CourseProgress } from "../models/courseProgress.model";
+// import { Course } from "../models/course.model";
+// import { Section } from "../models/section.model";
+import { SubSection } from "../models/subSection.model.js";
+import { CourseProgress } from "../models/courseProgress.model.js";
 
 
 const updateCourseProgress = async(req, res) => {

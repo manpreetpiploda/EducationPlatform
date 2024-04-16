@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import emailTemplate from "../templates/emailVerificationTemplate.js";
-import mailSender from "../utils/mailSender.js";
+// import {emailTemplate} from "../templates/emailVerificationTemplate.js";
+import {mailSender} from "../utils/mailSender.js";
+import { otpTemplate } from "../templates/emailVerificationTemplate.js";
 
 const otpSchema = new mongoose.Schema({
     email: {
@@ -29,7 +30,8 @@ async function sendVerificationEmail(email, otp) {
 		const mailResponse = await mailSender(
 			email,
 			"Verification Email",
-			emailTemplate(otp)
+			otpTemplate(otp)
+			// emailTemplate(otp)
 		);
 		console.log("Email sent successfully: ", mailResponse.response);
 	} catch (error) {
@@ -41,7 +43,7 @@ async function sendVerificationEmail(email, otp) {
 // Define a post-save hook to send email after the document has been saved
 otpSchema.pre("save", async function (next) {
 	console.log("New document saved to database");
-
+	
 	// Only send an email when a new document is created
 	if (this.isNew) {
 		await sendVerificationEmail(this.email, this.otp);

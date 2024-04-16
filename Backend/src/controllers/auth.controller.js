@@ -1,11 +1,13 @@
-import User from '../models/user.model.js';
+import {User} from '../models/user.model.js';
+import { Profile } from '../models/profile.model.js';
 import mongoose from 'mongoose';
-import OTP from '../models/otp.model.js';
+import {OTP} from '../models/otp.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import mailSender from '../utils/mailSender.js';
+import {mailSender} from '../utils/mailSender.js';
 import otpGenerator from 'otp-generator'; 
-import passwordUpdated from '../templates/passwordUpdated.template.js';
+import {passwordUpdated} from '../templates/passwordUpdated.template.js';
+
 
 const signup = async (req, res) => {
     try{
@@ -28,11 +30,12 @@ const signup = async (req, res) => {
             !confirmPassword ||
             !otp
         ) {
-            return res.status(403).send({
-            success: false,
-            message: "All Fields are required",
+            return res.status(403).json({
+              success: false,
+              message: "All Fields are required",
             })
         }
+        console.log("Data verified ");
 
         //password and confirmPassword mattches or not
         if (password !== confirmPassword) {
@@ -42,39 +45,45 @@ const signup = async (req, res) => {
                 "Password and Confirm Password do not match. Please try again.",
             })
         }
+        console.log("Data verified 2");
 
         //user already present or not
         const userPresent  = await User.findOne({email});
-        if(!userPresent){
+        console.log("User present :   ", userPresent);
+        if(userPresent){
             return res.send(400).json({
                 success:false,
                 message: "User is already present. Please sign in to continue"
             })
         }
+        console.log("Data verified 3 ");
 
             // Find the most recent OTP for the email
-    const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
-    console.log(response)
-    if (response.length === 0) {
-      // OTP not found for the email
-      return res.status(400).json({
-        success: false,
-        message: "The OTP is not valid",
-      })
-    } else if (otp !== response[0].otp) {
-      // Invalid OTP
-      return res.status(400).json({
-        success: false,
-        message: "The OTP is not valid",
-      })
-    }
-
+    // const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
+    // console.log(response)
+    // if (response.length === 0) {
+    //   // OTP not found for the email
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "The OTP is not valid",
+    //   })
+    // } else if (otp !== response[0].otp) {
+    //   // Invalid OTP
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "The OTP is not valid",
+    //   })
+    // }
+    console.log("Fail before has");
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10)
-
+    
+    console.log("password hased");
     // Create the user
     let approved = ""
     accountType === "Instructor" ? (approved = false) : (approved = true)
+
+    console.log("account type set");
     
     // Create the Additional Profile For User
     const profileDetails = await Profile.create({
@@ -83,6 +92,8 @@ const signup = async (req, res) => {
       about: null,
       contactNumber: null,
     })
+    console.log("profile is created");;
+
     const user = await User.create({
       firstName,
       lastName,
@@ -94,7 +105,7 @@ const signup = async (req, res) => {
       additionalDetails: profileDetails._id,
       image: "",
     })
-
+    console.log("user is created");
     return res.status(200).json({
       success: true,
       user,
@@ -221,14 +232,15 @@ const sendOtp = async (req, res) => {
       })
       result = await OTP.findOne({ otp: otp })
     }
-
+    console.log("New otp send 1")
     const otpBody = await OTP.create(
       { email,
-        randomOtp,
+        otp,
       })
-
+    console.log("New otp send")
     console.log("OTP Body", otpBody)
-    res.status(200).json({
+
+    return res.status(200).json({
       success: true,
       message: `OTP Sent Successfully`,
       otp,

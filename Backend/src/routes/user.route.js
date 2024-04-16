@@ -1,4 +1,4 @@
-import { signup, login, sendOtp, changePassword} from "../controllers/auth.controller";
+import { signup, login, sendOtp, changePassword} from "../controllers/auth.controller.js";
 import {resetPasswordToken, resetPassword } from "../controllers/resetPassword.controller.js"
 import { auth } from "../middlewares/auth.middleware.js";
 import {Router} from "express";

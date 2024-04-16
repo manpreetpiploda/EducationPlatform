@@ -1,10 +1,10 @@
-import { Course } from "../models/course.model";
-import { User } from "../models/user.model";
-import { uploadImageToCloudinary } from "../utils/imageUploader";
-import {Section} from "../models/section.model";
-import SubSection from "../models/subSection.model";
-import Category from "../models/category.model";
-import CourseProgress from "../models/courseProgress.model";
+import { Course } from "../models/course.model.js";
+import { User } from "../models/user.model.js";
+import { uploadImageToCloudinary } from "../utils/imageUploader.js";
+import {Section} from "../models/section.model.js";
+import {SubSection} from "../models/subSection.model.js";
+import {Category} from "../models/category.model.js";
+import {CourseProgress} from "../models/courseProgress.model.js";
 import { convertSecondsToDuration } from "../utils/secToDuration.js";
 
 
