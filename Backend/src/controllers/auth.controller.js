@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import {mailSender} from '../utils/mailSender.js';
 import otpGenerator from 'otp-generator'; 
 import {passwordUpdated} from '../templates/passwordUpdated.template.js';
+import {otpTemplate} from '../templates/emailVerificationTemplate.js'
 
 
 const signup = async (req, res) => {
@@ -58,59 +59,59 @@ const signup = async (req, res) => {
         }
         console.log("Data verified 3 ");
 
-            // Find the most recent OTP for the email
-    // const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
-    // console.log(response)
-    // if (response.length === 0) {
-    //   // OTP not found for the email
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "The OTP is not valid",
-    //   })
-    // } else if (otp !== response[0].otp) {
-    //   // Invalid OTP
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "The OTP is not valid",
-    //   })
-    // }
-    console.log("Fail before has");
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10)
-    
-    console.log("password hased");
-    // Create the user
-    let approved = ""
-    accountType === "Instructor" ? (approved = false) : (approved = true)
+        // Find the most recent OTP for the email
+        const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
+        console.log(response)
+        if (response.length === 0) {
+          // OTP not found for the email
+          return res.status(400).json({
+            success: false,
+            message: "The OTP is not valid",
+          })
+        } else if (otp !== response[0].otp) {
+          // Invalid OTP
+          return res.status(400).json({
+            success: false,
+            message: "The OTP is not valid",
+          })
+        }
+        console.log("Fail before has");
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10)
+        
+        console.log("password hased");
+        // Create the user
+        let approved = ""
+        accountType === "Instructor" ? (approved = false) : (approved = true)
 
-    console.log("account type set");
-    
-    // Create the Additional Profile For User
-    const profileDetails = await Profile.create({
-      gender: null,
-      dateOfBirth: null,
-      about: null,
-      contactNumber: null,
-    })
-    console.log("profile is created");;
+        console.log("account type set");
+        
+        // Create the Additional Profile For User
+        const profileDetails = await Profile.create({
+          gender: null,
+          dateOfBirth: null,
+          about: null,
+          contactNumber: null,
+        })
+        console.log("profile is created");;
 
-    const user = await User.create({
-      firstName,
-      lastName,
-      email,
-      contactNumber,
-      password: hashedPassword,
-      accountType: accountType,
-      approved: approved,
-      additionalDetails: profileDetails._id,
-      image: "",
-    })
-    console.log("user is created");
-    return res.status(200).json({
-      success: true,
-      user,
-      message: "User registered successfully",
-    })        
+        const user = await User.create({
+          firstName,
+          lastName,
+          email,
+          contactNumber,
+          password: hashedPassword,
+          accountType: accountType,
+          approved: approved,
+          additionalDetails: profileDetails._id,
+          image: "",
+        })
+        console.log("user is created");
+        return res.status(200).json({
+          success: true,
+          user,
+          message: "User registered successfully",
+        })        
 
     }catch(error){
         console.error(error)
@@ -233,6 +234,7 @@ const sendOtp = async (req, res) => {
       result = await OTP.findOne({ otp: otp })
     }
     console.log("New otp send 1")
+
     const otpBody = await OTP.create(
       { email,
         otp,
