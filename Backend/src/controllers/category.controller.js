@@ -31,12 +31,13 @@ const createCategory = async(req, res) => {
 
 const showAllCategories = async(req, res) => {
     try {
-        console.log("INSIDE SHOW ALL CATEGORIES");
-		const allCategorys = await Category.find({});
-		res.status(200).json({
-			success: true,
-			data: allCategorys,
-		});
+      console.log("INSIDE SHOW ALL CATEGORIES");
+      const allCategorys = await Category.find({});
+      console.log("all categories are ", allCategorys);
+      res.status(200).json({
+        success: true,
+        data: allCategorys,
+      });
 	} catch (error) {
 		return res.status(500).json({
 			success: false,

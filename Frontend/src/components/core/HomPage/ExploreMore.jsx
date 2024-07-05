@@ -21,8 +21,10 @@ const ExploreMore = () => {
   const setMyCards = (value) => {
     setCurrentTab(value);
     const result = HomePageExplore.filter((course) => course.tag === value);
+    // console.log("resulet is : ",result);
     setCourses(result[0].courses);
     setCurrentCard(result[0].courses[0].heading);
+    // console.log("heading is ", result[0].courses[0].heading)
   };
 
   return (
@@ -51,7 +53,6 @@ const ExploreMore = () => {
               key={index}
               onClick={() => setMyCards(ele)}
             >
-                ${console.log(ele)};
               {ele}
             </div>
           );

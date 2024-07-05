@@ -15,7 +15,7 @@ function Navbar() {
   const { token } = useSelector((state) => state.auth)
   const { user } = useSelector((state) => state.profile)
   const { totalItems } = useSelector((state) => state.cart)
-  const location = useLocation()
+  const location = useLocation()  
 
   const [subLinks, setSubLinks] = useState([])
   const [loading, setLoading] = useState(false)
@@ -25,7 +25,11 @@ function Navbar() {
       setLoading(true)
       try {
         const res = await apiConnector("GET", categories.CATEGORIES_API)
+        console.log("All categoiries are 11", res);
+        // setSubLinks(res.data.data)
         setSubLinks(res.data.data)
+        console.log("sub links", subLinks);
+        console.log("sub links length ", subLinks.length);
       } catch (error) {
         console.log("Could not fetch Categories.", error)
       }
@@ -33,7 +37,6 @@ function Navbar() {
     })()
   }, [])
 
-  // console.log("sub links", subLinks)
 
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname)
@@ -47,9 +50,11 @@ function Navbar() {
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
-        <Link to="/">
-          <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
-        </Link>
+        <Link to="/"> 
+          {/* // <img src={logo} alt="Logo" width={160} height={32} loading="lazy" /> */}
+          <div className="text-white font-bold text-2xl">Education Platform</div>
+        </Link> 
+        
         {/* Navigation links */}
         <nav className="hidden md:block">
           <ul className="flex gap-x-6 text-richblack-25">
@@ -59,6 +64,7 @@ function Navbar() {
                   <>
                     <div
                       className={`group relative flex cursor-pointer items-center gap-1 ${
+                        // matchRoute("/catalog")
                         matchRoute("/catalog/:catalogName")
                           ? "text-yellow-25"
                           : "text-richblack-25"

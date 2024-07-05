@@ -32,7 +32,7 @@ function CourseDetails() {
   const [response, setResponse] = useState(null)
   const [confirmationModal, setConfirmationModal] = useState(null)
   useEffect(() => {
-    // Calling fetchCourseDetails fucntion to fetch the details
+    // Calling fetchCourseDetails function to fetch the details
     (async () => {
       try {
         const res = await fetchCourseDetails(courseId)

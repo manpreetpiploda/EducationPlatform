@@ -14,5 +14,6 @@ const Button = ({ children, active, linkto }) => {
     </Link>
   );
 };
+// bg-yellow-50
 
 export default Button;

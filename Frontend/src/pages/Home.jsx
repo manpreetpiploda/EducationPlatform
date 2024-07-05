@@ -6,6 +6,7 @@ import HighlightText from "../components/core/HomPage/HilightText"
 import CTAButton from "../components/core/HomPage/Button"
 import CodeBlocks from "../components/core/HomPage/CodeBlocks";
 import Banner from "../assets/Images/banner.mp4";
+// import Banner from "../assets/Images/HomeVideos.mp4";
 import TimelineSection from "../components/core/HomPage/TimelineSection"
 import LearningLanguageSection from "../components/core/HomPage/LearningLanguageSection";
 import InstructorSection from "../components/core/HomPage/InstructorSection";   

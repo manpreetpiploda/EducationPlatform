@@ -217,8 +217,8 @@ export default function CoursesTable({ courses, setCourses }) {
   // console.log("All Course ", courses)
 
   return (
-    <div>
-      Table
+    <div className="text-white">
+      Courses
     </div>
   )
 }

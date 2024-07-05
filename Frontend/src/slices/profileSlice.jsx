@@ -14,7 +14,7 @@ const profileSlice = createSlice({
         },
         setLoading(state, value) {
             state.loading = value.payload;
-          },
+        },
     },
 });
 

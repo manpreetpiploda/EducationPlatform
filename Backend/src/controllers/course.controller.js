@@ -20,17 +20,23 @@ const createCourse = async (req, res) => {
         courseDescription,
         whatYouWillLearn,
         price,
-        tag: _tag,
+        // tag: _tag,
+        tag,
         category,
         status,
-        instructions: _instructions,
+        // instructions: _instructions,
+        instructions,
       } = req.body
       // Get thumbnail image from request files
       const thumbnail = req.files.thumbnailImage
+
+      // console.log("tag:_tag", _tag);
+      // console.log("instructions:instructions", _instructions);
   
-      // Convert the tag and instructions from stringified Array to Array
-      const tag = JSON.parse(_tag)
-      const instructions = JSON.parse(_instructions)
+      // // Convert the tag and instructions from stringified Array to Array
+      // const tag = JSON.parse(_tag)
+      // const instructions = JSON.parse(_instructions)
+      // console.log("instructions:-instructions 2  -> ", instructions);
   
       console.log("tag", tag)
       console.log("instructions", instructions)
@@ -157,7 +163,7 @@ const editCourse = async (req, res) => {
 
     // Update only the fields that are present in the request body
     for (const key in updates) {
-      if (updates.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(updates, key)) {
         if (key === "tag" || key === "instructions") {
           course[key] = JSON.parse(updates[key])
         } else {
